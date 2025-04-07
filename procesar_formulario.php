@@ -1,32 +1,33 @@
 <?php
-// Parámetros de conexión a la base de datos
 $host     = "localhost";
-$usuario  = "root";   // usuario por defecto en XAMPP
-$password = "";       // sin contraseña por defecto
-$dbname   = "bd_prueba"; // cambia si tu base de datos tiene otro nombre
+$usuario  = "usuarioweb";      // Cambia si usaste otro
+$password = "contrasena123";   // Cambia si usaste otra
+$dbname   = "bd_prueba";
 
-// Crear la conexión
 $conn = new mysqli($host, $usuario, $password, $dbname);
-
-// Verificar la conexión
 if ($conn->connect_error) {
   die("Conexión falló: " . $conn->connect_error);
 }
 
-// Recibir datos del formulario
-$nombre  = $_POST['nombre'];
-$correo  = $_POST['correo'];
-$mensaje = $_POST['mensaje'];
+$nombre  = $_POST['nombre'] ?? '';
+$correo  = $_POST['correo'] ?? '';
+$mensaje = $_POST['mensaje'] ?? '';
 
-// Insertar los datos en la tabla "contactos"
-$sql = "INSERT INTO contactos (nombre, correo, mensaje) VALUES ('$nombre', '$correo', '$mensaje')";
+if (empty($nombre) || empty($correo) || empty($mensaje)) {
+  die("Todos los campos son obligatorios.");
+}
 
-if ($conn->query($sql) === TRUE) {
+$sql = "INSERT INTO contactos (nombre, correo, mensaje) VALUES (?, ?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("sss", $nombre, $correo, $mensaje);
+
+if ($stmt->execute()) {
   echo "¡Datos guardados exitosamente!<br><br>";
   echo "<a href='mostrar_datos.php'>Ver datos en la base de datos</a>";
 } else {
-  echo "Error al guardar los datos: " . $conn->error;
+  echo "Error al guardar los datos: " . $stmt->error;
 }
 
+$stmt->close();
 $conn->close();
 ?>
