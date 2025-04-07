@@ -2,18 +2,34 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Formulario de Contacto U La Salle</title>
+  <title>Formulario de Contacto - Proyecto Académico</title>
   <link rel="stylesheet" href="estilos.css">
 </head>
+<script>
+  document.querySelector("form").addEventListener("submit", function (e) {
+    const nombre = document.getElementById("nombre").value.trim();
+    const correo = document.getElementById("correo").value.trim();
+    const asunto = document.getElementById("asunto").value.trim();
+    const mensaje = document.getElementById("mensaje").value.trim();
+
+    if (!nombre || !correo || !asunto || !mensaje) {
+      alert("Por favor completa todos los campos.");
+      e.preventDefault();
+    }
+  });
+</script>
 <body>
   <div class="contenedor">
-    <h1>📬 Formulario de Contacto U La Salle</h1>
+    <h1>📬 Proyecto de Formulario Académico</h1>
     <form action="procesar_formulario.php" method="POST" class="formulario">
       <label for="nombre">Nombre:</label>
       <input type="text" name="nombre" id="nombre" required>
 
       <label for="correo">Correo electrónico:</label>
       <input type="email" name="correo" id="correo" required>
+
+      <label for="asunto">Asunto:</label>
+      <input type="text" name="asunto" id="asunto" required>
 
       <label for="mensaje">Mensaje:</label>
       <textarea name="mensaje" id="mensaje" rows="5" required></textarea>

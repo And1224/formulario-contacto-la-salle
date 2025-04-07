@@ -46,7 +46,7 @@ h1 {
 .formulario button {
   width: 100%;
   padding: 12px;
-  background-color: #0d6efd;
+  background-color: #28a745;
   color: white;
   border: none;
   border-radius: 8px;
@@ -56,5 +56,5 @@ h1 {
 }
 
 .formulario button:hover {
-  background-color: #084298;
+  background-color: #218838;
 }

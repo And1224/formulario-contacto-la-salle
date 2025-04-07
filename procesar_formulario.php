@@ -3,6 +3,7 @@ $host     = "localhost";
 $usuario  = "usuarioweb";      // Cambia si usaste otro
 $password = "contrasena123";   // Cambia si usaste otra
 $dbname   = "bd_prueba";
+$asunto = $_POST['asunto'] ?? '';
 
 $conn = new mysqli($host, $usuario, $password, $dbname);
 if ($conn->connect_error) {
@@ -17,9 +18,9 @@ if (empty($nombre) || empty($correo) || empty($mensaje)) {
   die("Todos los campos son obligatorios.");
 }
 
-$sql = "INSERT INTO contactos (nombre, correo, mensaje) VALUES (?, ?, ?)";
+$sql = "INSERT INTO contactos (nombre, correo, asunto, mensaje) VALUES (?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("sss", $nombre, $correo, $mensaje);
+$stmt->bind_param("ssss", $nombre, $correo, $asunto, $mensaje);
 
 if ($stmt->execute()) {
   echo "¡Datos guardados exitosamente!<br><br>";
